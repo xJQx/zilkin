@@ -1,10 +1,11 @@
 import React from 'react';
-import { Navbar } from './components/navbar';
+import { Navbar, Hero } from './components';
 
 function App() {
   return (
     <div className="min-h-screen bg-brand-bg">
       <Navbar />
+      <Hero />
     </div>
   );
 }
