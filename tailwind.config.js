@@ -12,7 +12,7 @@ module.exports = {
         'brand-orange-default': '#ffa252',
         'brand-yellow-default': '#ffc224',
 
-        'brand-bg': '#1a191a',
+        'brand-bg': '#0C0B1D',
       },
     },
   },
