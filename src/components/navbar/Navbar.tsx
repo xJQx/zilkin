@@ -6,13 +6,13 @@ export const Navbar = () => {
   return (
     <div
       id="nav-container"
-      className="fixed flex w-full px-6 py-4 justify-between bg-transparent backdrop-blur"
+      className="fixed z-50 flex w-full px-6 py-4 justify-between bg-transparent backdrop-blur"
     >
       <Logo />
       <NavMenu
         links={[
           { label: 'Home', href: '/' },
-          { label: 'Contracts', href: '/contracts' },
+          { label: 'Wizard', href: '/contracts-wizard' },
           { label: 'Deploy', href: '/deploy' },
           {
             label: 'Scilla Docs',

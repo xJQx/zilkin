@@ -30,18 +30,18 @@ export const Hero = () => {
           <b className="text-brand-green-default">
             Scilla Contracts Deployment Tool
           </b>{' '}
-          that empowers you to deploy your Scilla contracts via{' '}
+          that empowers you to deploy your Scilla contracts via our{' '}
           <b className="text-brand-green-default">
-            a) iteractive code generator{' '}
+            a) Contracts Wizard (Interactive Code Generator){' '}
           </b>
           or{' '}
           <b className="text-brand-green-default">
-            b) our automatic deployment contract.
+            b) Automatic Deployment Contract.
           </b>
         </div>
 
         <div className="flex flex-col sm:flex-row justify-center items-center py-8">
-          <Button label="Start Now" href="/contracts" />
+          <Button label="Start Now" href="/contracts-wizard" />
           <Button
             label="Deploy Now"
             href="/deploy"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar } from './components';
 import { Route, Routes } from 'react-router-dom';
-import { ContractsPage, DeployPage, HomePage } from './pages';
+import { ContractsWizardPage, DeployPage, HomePage } from './pages';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/contracts" element={<ContractsPage />} />
+        <Route path="/contracts-wizard" element={<ContractsWizardPage />} />
         <Route path="/deploy" element={<DeployPage />} />
       </Routes>
     </div>

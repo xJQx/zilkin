@@ -1,3 +1,3 @@
 export { HomePage } from './home';
 export { DeployPage } from './deploy';
-export { ContractsPage } from './contracts';
+export { ContractsWizardPage } from './contracts-wizard';
