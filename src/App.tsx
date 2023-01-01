@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from './components';
+import { Navbar, Footer } from './components';
 import { Route, Routes } from 'react-router-dom';
 import { ContractsWizardPage, DeployPage, HomePage } from './pages';
 
@@ -12,6 +12,7 @@ function App() {
         <Route path="/contracts-wizard" element={<ContractsWizardPage />} />
         <Route path="/deploy" element={<DeployPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
