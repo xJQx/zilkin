@@ -9,7 +9,7 @@ export const FeatureHeader = (props: FeatureHeaderProps) => {
   const { numbering, title } = props;
 
   return (
-    <div className="mt-24 mb-8 text-4xl font-bold">
+    <div className="mt-24 mb-8 text-2xl sm:text-4xl font-bold">
       <span className="text-brand-green-default">{numbering}.&nbsp;</span>
       <span className="text-white">{title}</span>
     </div>

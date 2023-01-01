@@ -14,7 +14,7 @@ export const FeatureDescription = (props: FeatureDescriptionProps) => {
       <img src={imgSrc} alt={imgSrc} className="w-full lg:w-1/2 text-white" />
 
       {/* Description */}
-      <div className="w-full lg:w-1/2 text-white pl-4">{children}</div>
+      <div className="w-full lg:w-1/2 text-white pl-0 lg:pl-4">{children}</div>
     </div>
   );
 };

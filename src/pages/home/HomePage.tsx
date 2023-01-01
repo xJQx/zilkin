@@ -13,7 +13,7 @@ export const HomePage = () => {
       <Hero />
 
       {/* Features */}
-      <div id="features" className="min-h-screen pb-24 px-12 sm:px-24">
+      <div id="features" className="min-h-screen pb-12 sm:pb-24 px-8 sm:px-24">
         <FeatureHeader numbering="01" title="Contracts Wizard" />
         <FeatureDescription imgSrc="images/contracts-wizard-sample.jpg">
           <div>

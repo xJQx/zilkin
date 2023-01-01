@@ -26,7 +26,8 @@ export const Button = (props: ButtonProps) => {
   const bgColor = secondary ? 'bg-white' : 'bg-brand-blue-dark';
   const color = secondary ? 'text-brand-blue-dark' : 'text-white';
 
-  let buttonStyles = 'w-max px-12 py-3 rounded-3xl text-xl';
+  let buttonStyles =
+    'w-max px-8 sm:px-12 py-2 sm:py-3 rounded-3xl text-lg sm:text-xl';
 
   switch (variant) {
     case 'solid':
