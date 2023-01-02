@@ -56,17 +56,7 @@ procedure IsApprovedOperator(token_owner: ByStr20, operator: ByStr20)
 end
 `;
 
-export const procedures_mint = `
-procedure IsOwner(address: ByStr20)
-  is_owner = builtin eq contract_owner address;
-  match is_owner with
-  | True =>
-  | False =>
-    err = CodeNotOwner;
-    ThrowError err
-  end
-end
-
+const procedures_mint_mint = `
 procedure AuthorizedMint(recipient: ByStr20, amount: Uint128) 
   o_recipient_bal <- balances[recipient];
   bal = get_val o_recipient_bal;
@@ -78,7 +68,9 @@ procedure AuthorizedMint(recipient: ByStr20, amount: Uint128)
   e = {_eventname: "Minted"; minter: _sender; recipient: recipient; amount: amount};
   event e
 end
+`
 
+const procedures_mint_burn = `
 procedure AuthorizedBurnIfSufficientBalance(from: ByStr20, amount: Uint128)
   o_get_bal <- balances[from];
   bal = get_val o_get_bal;
@@ -98,4 +90,20 @@ procedure AuthorizedBurnIfSufficientBalance(from: ByStr20, amount: Uint128)
     ThrowError err
   end
 end
+`
+
+export const procedures_mint = (mint: boolean = false, burn: boolean = false) => `
+procedure IsOwner(address: ByStr20)
+  is_owner = builtin eq contract_owner address;
+  match is_owner with
+  | True =>
+  | False =>
+    err = CodeNotOwner;
+    ThrowError err
+  end
+end
+
+${mint ? procedures_mint_mint: ''}
+
+${burn ? procedures_mint_burn: ''}
 `;

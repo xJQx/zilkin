@@ -9,28 +9,47 @@ import {
 } from './transitions';
 import { utils, utils_operator } from './utils';
 
+interface MintArgs {
+  isMint: boolean;
+  mint?: boolean;
+  burn?: boolean;
+}
+
+interface OperatorArgs {
+  isOperator: boolean;
+  isOperatorFor?: boolean;
+  authorizeOperator?: boolean;
+  revokeOperator?: boolean;
+  operatorSend?: boolean;
+}
+
 const generate_zrc2_scilla = (
-  is_operator: boolean = false,
-  is_mint: boolean = false
+  operatorArgs: OperatorArgs,
+  mintArgs: MintArgs,
 ) => {
+  let { isMint, mint, burn } = mintArgs;
+  let { isOperator, ...operatorOptions } = operatorArgs;
+
+  if (mint || burn) isMint = true;
+
   let output = '';
 
   output += '\n' + common;
-  output += '\n' + contract_definition(is_operator);
+  output += '\n' + contract_definition(isOperator);
 
   output += '\n' + utils;
-  if (is_operator) output += '\n' + utils_operator;
+  if (isOperator) output += '\n' + utils_operator;
 
   output += '\n' + mutable_fields;
-  if (is_operator) output += '\n' + mutable_fields_operator;
+  if (isOperator) output += '\n' + mutable_fields_operator;
 
   output += '\n' + procedures;
-  if (is_operator) output += '\n' + procedures_operator;
-  if (is_mint) output += '\n' + procedures_mint;
+  if (isOperator) output += '\n' + procedures_operator;
+  if (isMint) output += '\n' + procedures_mint(mint, burn);
 
   output += '\n' + transitions;
-  if (is_operator) output += '\n' + transitions_operators;
-  if (is_mint) output += '\n' + transitions_mint;
+  if (isOperator) output += '\n' + transitions_operators(operatorOptions);
+  if (isMint) output += '\n' + transitions_mint(mint, burn);
 
   return output;
 };

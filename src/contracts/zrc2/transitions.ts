@@ -77,7 +77,28 @@ transition TransferFrom(from: ByStr20, to: ByStr20, amount: Uint128)
 end
 `;
 
-export const transitions_operators = `
+interface OperatorOptions {
+  isOperatorFor?: boolean;
+  authorizeOperator?: boolean;
+  revokeOperator?: boolean;
+  operatorSend?: boolean;
+}
+
+export const transitions_operators = (operatorOptions: OperatorOptions) => {
+  const { isOperatorFor, authorizeOperator, revokeOperator, operatorSend } =
+    operatorOptions;
+
+  let output = '';
+
+  if (isOperatorFor) output += transitions_operators_operator_for + '\n';
+  if (authorizeOperator) output += transitions_operators_authorize + '\n';
+  if (revokeOperator) output += transitions_operators_revoke + '\n';
+  if (operatorSend) output += transitions_operators_send + '\n';
+
+  return output;
+};
+
+const transitions_operators_operator_for = `
 (* @dev: Check if an address is an operator or default operator of a token_owner. Throw if not. *)
 (* @param operator:    Address of a potential operator.                                         *)
 (* @param token_owner: Address of a token_owner.                                                *)
@@ -88,7 +109,9 @@ transition IsOperatorFor(token_owner: ByStr20, operator: ByStr20)
   msgs = one_msg msg_to_sender;
   send msgs
 end
+`;
 
+const transitions_operators_authorize = `
 (* @dev: Make an address an operator of the caller.             *)
 (* @param operator: Address to be authorize as operator or      *)
 (* Re-authorize as default_operator. Cannot be calling address. *)
@@ -102,7 +125,9 @@ transition AuthorizeOperator(operator: ByStr20)
   e = {_eventname : "AuthorizeOperatorSuccess"; authorizer : _sender; authorized_operator : operator};
   event e
 end
+`;
 
+const transitions_operators_revoke = `
 (* @dev: Revoke an address from being an operator or default_operator of the caller. *)
 (* @param operator: Address to be removed as operator or default_operator.           *)
 transition RevokeOperator(operator: ByStr20)
@@ -115,8 +140,9 @@ transition RevokeOperator(operator: ByStr20)
   e = {_eventname : "RevokeOperatorSuccess"; revoker : _sender; revoked_operator : operator};
   event e
 end
+`;
 
-
+const transitions_operators_send = `
 (* @dev: Moves amount tokens from token_owner to recipient. _sender must be an operator of token_owner. *)
 (* @dev: Balance of recipient will increase. Balance of token_owner will decrease.                      *)
 (* @param from:        Address of the token_owner whose balance is decreased.                           *)
@@ -137,7 +163,16 @@ transition OperatorSend(from: ByStr20, to: ByStr20, amount: Uint128)
 end
 `;
 
-export const transitions_mint = `
+export const transitions_mint = (
+  mint: boolean = false,
+  burn: boolean = false,
+) => `
+${mint ? transitions_mint_mint : ''}
+
+${mint ? transitions_mint_burn : ''}
+`;
+
+const transitions_mint_mint = `
 (* @dev: Mint new tokens. Only contract_owner can mint.                      *)
 (* @param recipient: Address of the recipient whose balance is to increase.  *)
 (* @param amount:    Number of tokens to be minted.                          *)
@@ -152,7 +187,9 @@ transition Mint(recipient: ByStr20, amount: Uint128)
   msgs = two_msgs msg_to_recipient msg_to_sender;
   send msgs
 end
+`;
 
+const transitions_mint_burn = `
 (* @dev: Burn existing tokens. Only contract_owner can burn.                      *)
 (* @param burn_account: Address of the token_owner whose balance is to decrease.  *)
 (* @param amount:       Number of tokens to be burned.                            *)
