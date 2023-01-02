@@ -1,5 +1,10 @@
 import React from 'react';
+import { Wizard } from '../../components';
 
 export const ContractsWizardPage = () => {
-  return <div>ContractsWizardPage</div>;
+  return (
+    <div>
+      <Wizard />
+    </div>
+  );
 };
