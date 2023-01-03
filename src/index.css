@@ -7,3 +7,31 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 }
+
+/* ---------- Custom Scrollbar ---------- */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #0C0B1D;
+}
+
+/* Corner */
+::-webkit-scrollbar-corner {
+  background: #0C0B1D;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #76e7e2;
+  border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #29ccc4;
+}
