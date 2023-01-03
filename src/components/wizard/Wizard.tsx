@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ContractType } from '../../lib/types';
+import { ContractButton } from './ContractButton';
 
 export const Wizard = () => {
+  const [selectedContract, setSelectedContract] =
+    useState<ContractType>('zrc2');
+
+  useEffect(() => {
+    console.log(selectedContract);
+  }, [selectedContract]);
+
   return (
-    <div className="flex justify-center items-center pt-40 px-4">
+    <div className="flex justify-center items-center pt-40 px-6">
       <div
         id="wizard-container"
-        className="container flex flex-col gap-4 p-4 bg-slate-200 rounded-lg"
-        style={{ minHeight: '52rem' }}
+        className="container flex flex-col gap-4 p-4 min-h-[52rem] max-w-[1200px] bg-slate-200 rounded-lg"
       >
-        <div id="wizard-header" className="flex flex-row justify-between">
+        <div
+          id="wizard-header"
+          className="flex flex-row justify-between items-center font-bold"
+        >
           <div id="wizard-contracts-type" className="flex gap-2">
-            <button>ZRC2</button>
-            <button>ZRC6</button>
+            <ContractButton
+              label="ZRC2"
+              contract="zrc2"
+              selectedContract={selectedContract}
+              setSelectedContract={setSelectedContract}
+            />
+            <ContractButton
+              label="ZRC6"
+              contract="zrc6"
+              selectedContract={selectedContract}
+              setSelectedContract={setSelectedContract}
+            />
           </div>
           <div id="wizard-action-buttons">
             <button>Copy to Clipboard</button>
