@@ -9,13 +9,13 @@ import {
 } from './transitions';
 import { utils, utils_operator } from './utils';
 
-interface MintArgs {
+export interface MintArgs {
   isMint: boolean;
   mint?: boolean;
   burn?: boolean;
 }
 
-interface OperatorArgs {
+export interface OperatorArgs {
   isOperator: boolean;
   isOperatorFor?: boolean;
   authorizeOperator?: boolean;
