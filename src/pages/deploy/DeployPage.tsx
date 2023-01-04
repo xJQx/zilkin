@@ -1,4 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import generate_zrc2_scilla from '../../contracts/zrc2/zrc2';
+import generate_zrc6_scilla, { ZRC6Options } from '../../contracts/zrc6/zrc6';
+
+declare global {
+  interface Window {
+    zilPay: any;
+  }
+}
 
 const tokens = ['ZRC-2', 'ZRC-6'];
 
@@ -12,18 +21,6 @@ interface OperatorOptions {
   authorizeOperator: boolean;
   revokeOperator: boolean;
   operatorSend: boolean;
-}
-
-interface ZRC6Options {
-  pause: boolean;
-  royaltyRecipient: boolean;
-  royaltyBps: boolean;
-  setBaseURL: boolean;
-  batchMint: boolean;
-  burn: boolean;
-  batchBurn: boolean;
-  batchTransferFrom: boolean;
-  contractOwnershipRecipient: boolean;
 }
 
 const initialMintOptions: MintOptions = {
@@ -41,7 +38,7 @@ const initialOperatorOptions: OperatorOptions = {
 const initialZRC6Options: ZRC6Options = {
   pause: false,
   royaltyRecipient: false,
-  royaltyBps: false,
+  royaltyBPS: false,
   setBaseURL: false,
   batchMint: false,
   burn: false,
@@ -55,12 +52,19 @@ const ConnectButton = ({
 }: {
   setConnected: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const connect = async () => {
+    if (window.zilPay !== undefined) {
+      const isConnect = await window.zilPay.wallet.connect();
+      if (isConnect) setConnected(true);
+      else alert('User rejected');
+    } else {
+      alert('ZilPay not found!');
+    }
+  };
   return (
     <div
       className="text-xl px-6 py-2 rounded-full cursor-pointer border-2 border-brand-green-default bg-brand-green-default ease-in-out hover:scale-110 duration-200"
-      onClick={() => {
-        setConnected(true);
-      }}
+      onClick={connect}
     >
       Connect
     </div>
@@ -100,6 +104,72 @@ const ZRC2Content = () => {
   const [operatorOptions, setOperatorOptions] = useState<OperatorOptions>(
     initialOperatorOptions,
   );
+  const [immutableFields, setImmutableFields] =
+    useState<ZRC2ImmutableFieldsOptions>(zrc2InitialImmutableFieldsOptions);
+  const [scillaCode, setScillaCode] = useState<string>('');
+  const [init, setInit] = useState<DeployInit[]>([]);
+
+  useEffect(() => {
+    setScillaCode(
+      generate_zrc2_scilla(
+        {
+          isOperator:
+            Object.values(operatorOptions).filter(opt => opt).length > 0,
+          ...operatorOptions,
+        },
+        {
+          isMint: Object.values(mintOptions).filter(opt => opt).length > 0,
+          ...mintOptions,
+        },
+      ),
+    );
+  }, [mintOptions, operatorOptions]);
+
+  useEffect(() => {
+    const newInit: DeployInit[] = [
+      {
+        vname: 'contract_owner',
+        type: 'ByStr20',
+        value: window.zilPay.crypto.fromBech32Address(
+          immutableFields.contract_owner,
+        ),
+      },
+      {
+        vname: 'name',
+        type: 'String',
+        value: immutableFields.name,
+      },
+      {
+        vname: 'symbol',
+        type: 'String',
+        value: immutableFields.symbol,
+      },
+      {
+        vname: 'decimals',
+        type: 'Uint32',
+        value: String(immutableFields.decimals),
+      },
+      {
+        vname: 'init_supply',
+        type: 'Uint128',
+        value: String(immutableFields.init_supply),
+      },
+      {
+        vname: '_scilla_version',
+        type: 'Uint32',
+        value: '0',
+      },
+    ];
+
+    if (Object.values(operatorOptions).filter(opt => opt).length > 0)
+      newInit.push({
+        vname: 'default_operators',
+        type: 'List ByStr20',
+        value: immutableFields.default_operators,
+      });
+
+    setInit(newInit);
+  }, [immutableFields]);
 
   return (
     <>
@@ -141,8 +211,10 @@ const ZRC2Content = () => {
         isOperator={
           Object.values(operatorOptions).filter(checked => checked).length > 0
         }
+        immutableFields={immutableFields}
+        setImmutableFields={setImmutableFields}
       />
-      <DeployButton />
+      <DeployButton scillaCode={scillaCode} init={init} />
     </>
   );
 };
@@ -150,6 +222,49 @@ const ZRC2Content = () => {
 const ZRC6Content = () => {
   const [zrc6Options, setZrc6Options] =
     useState<ZRC6Options>(initialZRC6Options);
+  const [immutableFields, setImmutableFields] =
+    useState<ZRC6ImmutableFieldsOptions>(zrc6InitialImmutableFields);
+  const [scillaCode, setScillaCode] = useState<string>('');
+  const [init, setInit] = useState<DeployInit[]>([]);
+
+  useEffect(() => {
+    setScillaCode(generate_zrc6_scilla(zrc6Options));
+  }, [zrc6Options]);
+
+  useEffect(() => {
+    const newInit: DeployInit[] = [
+      {
+        vname: 'initial_contract_owner',
+        type: 'ByStr20',
+        value: window.zilPay.crypto.fromBech32Address(
+          immutableFields.initial_contract_owner,
+        ),
+      },
+      {
+        vname: 'initial_base_uri',
+        type: 'String',
+        value: String(immutableFields.initial_base_uri),
+      },
+      {
+        vname: 'name',
+        type: 'String',
+        value: immutableFields.name,
+      },
+      {
+        vname: 'symbol',
+        type: 'String',
+        value: immutableFields.symbol,
+      },
+      {
+        vname: '_scilla_version',
+        type: 'Uint32',
+        value: '0',
+      },
+    ];
+
+    setInit(newInit);
+  }, [immutableFields]);
+
   return (
     <>
       <div>
@@ -167,8 +282,11 @@ const ZRC6Content = () => {
           />
         ))}
       </div>
-      <ZRC6ImmutableFields />
-      <DeployButton />
+      <ZRC6ImmutableFields
+        immutableFields={immutableFields}
+        setImmutableFields={setImmutableFields}
+      />
+      <DeployButton scillaCode={scillaCode} init={init} />
     </>
   );
 };
@@ -210,7 +328,7 @@ interface ZRC2ImmutableFieldsOptions {
 }
 
 const zrc2InitialImmutableFieldsOptions: ZRC2ImmutableFieldsOptions = {
-  contract_owner: '',
+  contract_owner: window.zilPay.wallet.defaultAccount.bech32,
   name: '',
   symbol: '',
   decimals: 0,
@@ -218,10 +336,17 @@ const zrc2InitialImmutableFieldsOptions: ZRC2ImmutableFieldsOptions = {
   default_operators: [],
 };
 
-const ZRC2ImmutableFields = ({ isOperator }: { isOperator: boolean }) => {
-  const [immutableFields, setImmutableFields] =
-    useState<ZRC2ImmutableFieldsOptions>(zrc2InitialImmutableFieldsOptions);
-
+const ZRC2ImmutableFields = ({
+  isOperator,
+  immutableFields,
+  setImmutableFields,
+}: {
+  isOperator: boolean;
+  immutableFields: ZRC2ImmutableFieldsOptions;
+  setImmutableFields: React.Dispatch<
+    React.SetStateAction<ZRC2ImmutableFieldsOptions>
+  >;
+}) => {
   return (
     <div>
       <TextInput
@@ -286,7 +411,7 @@ const ZRC2ImmutableFields = ({ isOperator }: { isOperator: boolean }) => {
   );
 };
 
-interface ZRC6ImmutableFields {
+interface ZRC6ImmutableFieldsOptions {
   initial_contract_owner: string;
   initial_base_uri: string;
   name: string;
@@ -294,23 +419,28 @@ interface ZRC6ImmutableFields {
 }
 
 const zrc6InitialImmutableFields = {
-  initial_contract_owner: '',
+  initial_contract_owner: window.zilPay.wallet.defaultAccount.bech32,
   initial_base_uri: '',
   name: '',
   symbol: '',
 };
 
-const ZRC6ImmutableFields = () => {
-  const [immutableFields, setImmutableFields] = useState<ZRC6ImmutableFields>(
-    zrc6InitialImmutableFields,
-  );
-
+const ZRC6ImmutableFields = ({
+  immutableFields,
+  setImmutableFields,
+}: {
+  immutableFields: ZRC6ImmutableFieldsOptions;
+  setImmutableFields: React.Dispatch<
+    React.SetStateAction<ZRC6ImmutableFieldsOptions>
+  >;
+}) => {
   return (
     <div>
       {Object.keys(immutableFields).map(key => (
         <TextInput
           key={key}
           name={key}
+          value={immutableFields[key as keyof ZRC6ImmutableFieldsOptions]}
           onChange={e =>
             setImmutableFields(prev => ({ ...prev, [key]: e.target.value }))
           }
@@ -327,7 +457,7 @@ const TextInput = ({
   numberInput,
 }: {
   name: string;
-  value?: string | number | string[];
+  value: string | number | string[];
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   numberInput?: boolean;
 }) => {
@@ -348,15 +478,42 @@ const TextInput = ({
   );
 };
 
+interface DeployInit {
+  vname: string;
+  type: string;
+  value: string | number | string[];
+}
+
 const DeployButton = ({
-  onClick,
+  init,
+  scillaCode,
 }: {
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  init?: DeployInit[];
+  scillaCode?: string;
 }) => {
+  console.log(scillaCode);
+  const deploy = async () => {
+    if (window.zilPay !== undefined) {
+      const contract = window.zilPay.contracts.new(scillaCode, init);
+      try {
+        const [tx, _] = await contract.deploy({
+          gasLimit: '25000',
+          gasPrice: '1000000000',
+        });
+        window.open(
+          `https://viewblock.io/zilliqa/tx/0x${tx.ID}?network=${window.zilPay.wallet.net}`,
+        );
+      } catch (e: any) {
+        alert(e);
+      }
+    } else {
+      alert('ZilPay not found!');
+    }
+  };
   return (
     <div
       className="text-xl px-6 py-2 rounded-full cursor-pointer border-2 border-brand-green-default bg-brand-green-default ease-in-out hover:scale-110 duration-200"
-      onClick={onClick}
+      onClick={deploy}
     >
       Deploy
     </div>
