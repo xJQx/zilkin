@@ -35,10 +35,11 @@ const generate_zrc2_scilla = (
   let output = '';
 
   output += '\n' + common;
-  output += '\n' + contract_definition(isOperator);
 
   output += '\n' + utils;
   if (isOperator) output += '\n' + utils_operator;
+
+  output += '\n' + contract_definition(isOperator);
 
   output += '\n' + mutable_fields;
   if (isOperator) output += '\n' + mutable_fields_operator;

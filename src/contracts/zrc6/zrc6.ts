@@ -4,9 +4,8 @@ import * as mutableField from './mutableFields';
 import * as procedure from './procedures';
 import * as transition from './transitions';
 
-export interface Options {
+export interface ZRC6Options {
   pause: boolean;
-  royalty: boolean;
   royaltyRecipient: boolean;
   royaltyBPS: boolean;
   setBaseURL: boolean;
@@ -17,21 +16,22 @@ export interface Options {
   contractOwnershipRecipient: boolean;
 }
 
-const generate_zrc6_scilla = (options: Options) => {
+const generate_zrc6_scilla = (options: ZRC6Options) => {
   let output = '';
+  let royalty = false;
 
-  if (options.royaltyRecipient || options.royaltyBPS) options.royalty = true;
+  if (options.royaltyRecipient || options.royaltyBPS) royalty = true;
 
   output += '\n' + common;
   output += '\n' + contract_definition;
 
   output += '\n' + mutableField.main;
-  if (options.royalty) output += '\n' + mutableField.royalty;
+  if (royalty) output += '\n' + mutableField.royalty;
   if (options.contractOwnershipRecipient)
     output += '\n' + mutableField.contractOwnershipRecipient;
 
   output += '\n' + procedure.main;
-  if (options.royalty) output += '\n' + procedure.royalty;
+  if (royalty) output += '\n' + procedure.royalty;
 
   output += '\n' + transition.main;
   if (options.pause) output += '\n' + transition.pause;
