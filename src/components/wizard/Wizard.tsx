@@ -3,19 +3,23 @@ import { ContractType } from '../../lib/types';
 import { ContractButton } from './ContractButton';
 import { FaCopy } from 'react-icons/fa';
 import { Zrc2Config, Zrc6Config } from './config';
+import { useAlert } from '../../lib/hooks';
 
 export const Wizard = () => {
   const [selectedContract, setSelectedContract] =
     useState<ContractType>('zrc2');
   const [wizardCodeBody, setWizardCodeBody] = useState('');
+  const { AlertComponent, showAlert } = useAlert();
 
   // Copy code to clipboard
   const copyToClipboard = () => {
-    console.log('copied to clipboard!');
+    navigator.clipboard.writeText(wizardCodeBody);
+    showAlert('success', 'Copied to clipboard!');
   };
 
   return (
-    <div className="flex justify-center items-center pt-40 px-6">
+    <div className="flex flex-col justify-center items-center pt-40 px-6">
+      <AlertComponent />
       <div
         id="wizard-container"
         className="container flex flex-col p-4 min-h-[42rem] max-w-[1200px] bg-slate-200 rounded-lg overflow-x-auto"
