@@ -169,7 +169,7 @@ export const transitions_mint = (
 ) => `
 ${mint ? transitions_mint_mint : ''}
 
-${mint ? transitions_mint_burn : ''}
+${burn ? transitions_mint_burn : ''}
 `;
 
 const transitions_mint_mint = `
