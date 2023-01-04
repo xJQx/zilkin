@@ -14,10 +14,7 @@ export const Navbar = () => {
           { label: 'Home', href: '/' },
           { label: 'Wizard', href: '/contracts-wizard' },
           { label: 'Deploy', href: '/deploy' },
-          {
-            label: 'Scilla Docs',
-            href: 'https://scilla.readthedocs.io/en/latest/',
-          },
+          { label: 'Docs', href: '/docs' },
         ]}
       />
     </div>

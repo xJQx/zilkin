@@ -28,5 +28,6 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": ["src/contracts/**/*.ts"]
 }
