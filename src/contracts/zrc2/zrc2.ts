@@ -10,27 +10,27 @@ import {
 import { utils, utils_operator } from './utils';
 
 export interface MintArgs {
-  isMint: boolean;
-  mint?: boolean;
-  burn?: boolean;
+  mint: boolean;
+  burn: boolean;
 }
 
 export interface OperatorArgs {
-  isOperator: boolean;
-  isOperatorFor?: boolean;
-  authorizeOperator?: boolean;
-  revokeOperator?: boolean;
-  operatorSend?: boolean;
+  isOperatorFor: boolean;
+  authorizeOperator: boolean;
+  revokeOperator: boolean;
+  operatorSend: boolean;
 }
 
 const generate_zrc2_scilla = (
   operatorArgs: OperatorArgs,
   mintArgs: MintArgs,
 ) => {
-  let { isMint, mint, burn } = mintArgs;
-  let { isOperator, ...operatorOptions } = operatorArgs;
-
+  let { mint, burn } = mintArgs;
+  
+  let isOperator = false;
+  let isMint = false
   if (mint || burn) isMint = true;
+  if (Object.values(operatorArgs).filter((arg) => arg).length > 0) isOperator = true;
 
   let output = '';
 
@@ -49,7 +49,7 @@ const generate_zrc2_scilla = (
   if (isMint) output += '\n' + procedures_mint(mint, burn);
 
   output += '\n' + transitions;
-  if (isOperator) output += '\n' + transitions_operators(operatorOptions);
+  if (isOperator) output += '\n' + transitions_operators(operatorArgs);
   if (isMint) output += '\n' + transitions_mint(mint, burn);
 
   return output;

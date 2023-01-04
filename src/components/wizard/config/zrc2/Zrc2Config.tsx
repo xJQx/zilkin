@@ -26,18 +26,12 @@ export const Zrc2Config = (props: Zrc2ConfigProps) => {
   useEffect(() => {
     // Mint
     const mintArgs: MintArgs = {
-      isMint: isMintable || isBurnable,
       mint: isMintable,
       burn: isBurnable,
     };
 
     // Operator
     const operatorArgs: OperatorArgs = {
-      isOperator:
-        isOperatorFor ||
-        isAuthorizeOperator ||
-        isRevokeOperator ||
-        isOperatorSend,
       isOperatorFor: isOperatorFor,
       authorizeOperator: isAuthorizeOperator,
       revokeOperator: isRevokeOperator,
