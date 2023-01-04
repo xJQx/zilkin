@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ZRC6Form } from './components/zrc6/ZRC6Form';
 import { ZRC2Form } from './components/zrc2/ZRC2Form';
+import { ContractConfig } from '../../lib/types';
 
 declare global {
   interface Window {
@@ -37,6 +38,31 @@ const ConnectButton = ({
 
 const Content = () => {
   const [token, setToken] = useState<string>(tokens[0]);
+  const [contractConfig, setContractConfig] = useState<ContractConfig>();
+
+  useEffect(() => {
+    const stored_contract = localStorage.getItem('contract-config');
+
+    if (stored_contract) {
+      const contract_config = JSON.parse(stored_contract);
+
+      if (contract_config) {
+        if (contract_config.contract === 'zrc2') {
+          setToken('ZRC-2');
+          setContractConfig({
+            contract: 'zrc2',
+            zrc2Options: contract_config.zrc2Options,
+          });
+        } else if (contract_config.contract === 'zrc6') {
+          setToken('ZRC-6');
+          setContractConfig({
+            contract: 'zrc6',
+            zrc6Options: contract_config.zrc6Options,
+          });
+        }
+      }
+    }
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center pt-40 px-4 gap-6">
@@ -56,14 +82,20 @@ const Content = () => {
           </div>
         ))}
       </div>
-      {token === 'ZRC-2' && <ZRC2Form />}
-      {token === 'ZRC-6' && <ZRC6Form />}
+      {token === 'ZRC-2' && (
+        <ZRC2Form initialConfig={contractConfig?.zrc2Options} />
+      )}
+      {token === 'ZRC-6' && (
+        <ZRC6Form initialConfig={contractConfig?.zrc6Options} />
+      )}
     </div>
   );
 };
 
 export const DeployPage = () => {
-  const [connected, setConnected] = useState<boolean>(false);
+  const [connected, setConnected] = useState<boolean>(
+    window.zilPay !== undefined && window.zilPay.wallet !== undefined,
+  );
 
   return (
     <div className="flex flex-col justify-center items-center pt-40 px-4 gap-6">

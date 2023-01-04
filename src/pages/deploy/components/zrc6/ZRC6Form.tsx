@@ -23,9 +23,14 @@ const initialZRC6Options: ZRC6Options = {
   contractOwnershipRecipient: false,
 };
 
-export const ZRC6Form = () => {
-  const [zrc6Options, setZrc6Options] =
-    useState<ZRC6Options>(initialZRC6Options);
+export const ZRC6Form = ({
+  initialConfig,
+}: {
+  initialConfig?: ZRC6Options;
+}) => {
+  const [zrc6Options, setZrc6Options] = useState<ZRC6Options>(
+    initialConfig || initialZRC6Options,
+  );
   const [immutableFields, setImmutableFields] =
     useState<ZRC6ImmutableFieldsOptions>(zrc6InitialImmutableFields);
   const [scillaCode, setScillaCode] = useState<string>('');
@@ -39,6 +44,10 @@ export const ZRC6Form = () => {
       }));
     }
   }, []);
+
+  useEffect(() => {
+    if (initialConfig) setZrc6Options(initialConfig);
+  }, [initialConfig]);
 
   useEffect(() => {
     setScillaCode(generate_zrc6_scilla(zrc6Options));

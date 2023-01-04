@@ -8,6 +8,7 @@ import {
   ZRC2ImmutableFieldsOptions,
   zrc2InitialImmutableFields,
 } from './ZRC2ImmutableFields';
+import { ContractConfig } from '../../../../lib/types';
 
 interface MintOptions {
   mint: boolean;
@@ -33,11 +34,16 @@ const initialOperatorOptions: OperatorOptions = {
   operatorSend: false,
 };
 
-export const ZRC2Form = () => {
-  const [mintOptions, setMintOptions] =
-    useState<MintOptions>(initialMintOptions);
+export const ZRC2Form = ({
+  initialConfig,
+}: {
+  initialConfig?: ContractConfig['zrc2Options'];
+}) => {
+  const [mintOptions, setMintOptions] = useState<MintOptions>(
+    initialConfig?.mintArgs || initialMintOptions,
+  );
   const [operatorOptions, setOperatorOptions] = useState<OperatorOptions>(
-    initialOperatorOptions,
+    initialConfig?.operatorArgs || initialOperatorOptions,
   );
   const [immutableFields, setImmutableFields] =
     useState<ZRC2ImmutableFieldsOptions>(zrc2InitialImmutableFields);
@@ -54,19 +60,13 @@ export const ZRC2Form = () => {
   }, []);
 
   useEffect(() => {
-    setScillaCode(
-      generate_zrc2_scilla(
-        {
-          isOperator:
-            Object.values(operatorOptions).filter(opt => opt).length > 0,
-          ...operatorOptions,
-        },
-        {
-          isMint: Object.values(mintOptions).filter(opt => opt).length > 0,
-          ...mintOptions,
-        },
-      ),
-    );
+    if (initialConfig?.mintArgs) setMintOptions(initialConfig.mintArgs);
+    if (initialConfig?.operatorArgs)
+      setOperatorOptions(initialConfig.operatorArgs);
+  }, [initialConfig]);
+
+  useEffect(() => {
+    setScillaCode(generate_zrc2_scilla(operatorOptions, mintOptions));
   }, [mintOptions, operatorOptions]);
 
   useEffect(() => {
