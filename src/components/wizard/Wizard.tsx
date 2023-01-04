@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ContractType } from '../../lib/types';
 import { ContractButton } from './ContractButton';
 import { FaCopy } from 'react-icons/fa';
-import { Zrc2Config } from './config';
+import { Zrc2Config, Zrc6Config } from './config';
 
 export const Wizard = () => {
   const [selectedContract, setSelectedContract] =
     useState<ContractType>('zrc2');
   const [wizardCodeBody, setWizardCodeBody] = useState('');
-
-  // When user change the scilla contract that they want
-  useEffect(() => {
-    console.log(selectedContract);
-  }, [selectedContract]);
 
   // Copy code to clipboard
   const copyToClipboard = () => {
@@ -59,9 +54,14 @@ export const Wizard = () => {
         >
           <div
             id="wizard-configuration"
-            className="w-64 bg-slate-50 rounded-lg p-4 shadow"
+            className="min-w-64 bg-slate-50 rounded-lg p-4 shadow"
           >
-            <Zrc2Config setWizardCodeBody={setWizardCodeBody} />
+            {selectedContract === 'zrc2' && (
+              <Zrc2Config setWizardCodeBody={setWizardCodeBody} />
+            )}
+            {selectedContract === 'zrc6' && (
+              <Zrc6Config setWizardCodeBody={setWizardCodeBody} />
+            )}
           </div>
           <div
             id="wizard-code"
