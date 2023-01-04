@@ -355,13 +355,12 @@ transition SetRoyaltyFeeBPS(fee_bps: Uint128)
   e = { 
     _eventname: "SetRoyaltyFeeBPS";
     royalty_fee_bps: fee_bps
-  };(* Sets \`fee_bps\` as royalty fee bps. *)
-(* @param: fee_bps - Royalty fee BPS *)
-(* @Requirements: *)
-(* - \`_sender\` must be the contract owner. Otherwise, it must throw \`NotContractOwnerError\` *)
-(* - \`fee_bps\` must be in the range of 1 and 10000. Otherwise, it must throw \`InvalidFeeBPSError\` *)
-transition SetRoyaltyFeeBPS(fee_bps: Uint128)
-  RequireContractOwner;
+  };
+  event e;
+  msg_to_sender = {
+    _tag: "ZRC6_SetRoyaltyFeeBPSCallback"; 
+    _recipient: _sender;
+    _amount: Uint128 0;
     royalty_fee_bps: fee_bps
   };
   msgs = one_msg msg_to_sender;
