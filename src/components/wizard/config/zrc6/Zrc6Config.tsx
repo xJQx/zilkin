@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import generate_zrc6_scilla, { Options } from '../../../../contracts/zrc6/zrc6';
+import { ContractConfig } from '../../../../lib/types';
 import { FeatureCheckbox } from '../FeatureCheckbox';
 
 interface Zrc6ConfigProps {
@@ -37,6 +38,13 @@ export const Zrc6Config = (props: Zrc6ConfigProps) => {
 
     const wizardCodeBody = generate_zrc6_scilla(options);
     setWizardCodeBody(wizardCodeBody);
+
+    // Store config in localstorage for deployment
+    const contractConfig: ContractConfig = {
+      zrc6Options: options,
+      zrc2Options: undefined,
+    };
+    localStorage.setItem('contract-config', JSON.stringify(contractConfig));
   }, [
     isPause,
     isRoyaltyRecipient,
