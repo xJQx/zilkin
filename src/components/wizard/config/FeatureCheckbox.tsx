@@ -31,7 +31,7 @@ export const FeatureCheckbox = (props: FeatureCheckboxProps) => {
         <div className="group/info">
           <FaQuestionCircle className="text-slate-400 group-hover:text-slate-500 ml-1" />
           {/* https://www.kindacode.com/article/tailwind-css-how-to-create-tooltips/ */}
-          <span className="flex flex-col absolute z-10 hidden group-hover/info:flex translate-y-2 -translate-x-1 w-48 px-2 py-1 bg-gray-700 rounded-lg text-white text-sm before:content-[''] before:absolute before:-top-2 before:left-2 before:-translate-y-1/2 before:border-8 before:border-y-transparent before:border-l-transparent before:border-r-gray-700 before:rotate-90">
+          <span className="flex flex-col absolute z-10 hidden group-hover/info:flex translate-y-2 -translate-x-40 sm:-translate-x-1 w-48 px-2 py-1 bg-gray-700 rounded-lg text-white text-sm before:content-[''] before:absolute before:-top-2 before:right-3 sm:before:right-auto sm:before:left-2 before:-translate-y-1/2 before:border-8 before:border-y-transparent before:border-l-transparent before:border-r-gray-700 before:rotate-90">
             <span>
               {infoText}&nbsp;
               <a

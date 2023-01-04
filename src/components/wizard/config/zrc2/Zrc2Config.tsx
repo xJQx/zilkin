@@ -3,6 +3,7 @@ import generate_zrc2_scilla, {
   MintArgs,
   OperatorArgs,
 } from '../../../../contracts/zrc2/zrc2';
+import { ContractConfig } from '../../../../lib/types';
 import { FeatureCheckbox } from '../FeatureCheckbox';
 
 interface Zrc2ConfigProps {
@@ -45,6 +46,16 @@ export const Zrc2Config = (props: Zrc2ConfigProps) => {
 
     const wizardCodeBody = generate_zrc2_scilla(operatorArgs, mintArgs);
     setWizardCodeBody(wizardCodeBody);
+
+    // Store config in localstorage for deployment
+    const contractConfig: ContractConfig = {
+      zrc2Options: {
+        mintArgs: mintArgs,
+        operatorArgs: operatorArgs,
+      },
+      zrc6Options: undefined,
+    };
+    localStorage.setItem('contract-config', JSON.stringify(contractConfig));
   }, [
     isMintable,
     isBurnable,

@@ -4,7 +4,7 @@ import * as mutableField from './mutableFields';
 import * as procedure from './procedures';
 import * as transition from './transitions';
 
-interface Options {
+export interface Options {
   pause: boolean;
   royalty: boolean;
   royaltyRecipient: boolean;
