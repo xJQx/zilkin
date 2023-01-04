@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ZRC6Form } from './components/zrc6/ZRC6Form';
 import { ZRC2Form } from './components/zrc2/ZRC2Form';
 import { ContractConfig } from '../../lib/types';
+import { PageTitle } from '../../components/typography/PageTitle';
 
 declare global {
   interface Window {
@@ -66,7 +67,7 @@ const Content = () => {
 
   return (
     <div className="flex flex-col justify-center items-center pt-40 px-4 gap-6">
-      <div className="text-white">Deploy Page</div>
+      <PageTitle title="Deploy Page" />
       <div className="flex flex-wrap gap-3 justify-center">
         {tokens.map(tok => (
           <div
