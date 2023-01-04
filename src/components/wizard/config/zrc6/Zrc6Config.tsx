@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import generate_zrc6_scilla, { Options } from '../../../../contracts/zrc6/zrc6';
+import generate_zrc6_scilla, {
+  ZRC6Options,
+} from '../../../../contracts/zrc6/zrc6';
 import { ContractConfig } from '../../../../lib/types';
 import { FeatureCheckbox } from '../FeatureCheckbox';
 
@@ -23,9 +25,8 @@ export const Zrc6Config = (props: Zrc6ConfigProps) => {
 
   useEffect(() => {
     // Options
-    const options: Options = {
+    const options: ZRC6Options = {
       pause: isPause,
-      royalty: isRoyaltyRecipient || isRoyaltyBPS,
       royaltyRecipient: isRoyaltyRecipient,
       royaltyBPS: isRoyaltyBPS,
       setBaseURL: isSetBaseUrl,

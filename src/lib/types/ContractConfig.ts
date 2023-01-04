@@ -1,5 +1,5 @@
 import { MintArgs, OperatorArgs } from '../../contracts/zrc2/zrc2';
-import { Options as ZRC6Options } from '../../contracts/zrc6/zrc6';
+import { ZRC6Options } from '../../contracts/zrc6/zrc6';
 import { ContractType } from './ContractType';
 
 export type ContractConfig = {
