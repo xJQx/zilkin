@@ -53,7 +53,7 @@ export const HomePage = () => {
           transition={{ duration: 0.3 }}
         >
           <FeatureHeader numbering="02" title="Automatic Deployment" />
-          <FeatureDescription imgSrc="images/automatic-deployment-sample.jpg">
+          <FeatureDescription imgSrc="images/automatic-deployment-sample.png">
             <div>
               Just want to <GreenText>deploy</GreenText> your Scilla Token or
               NFT <GreenText>without writing a single line of code?</GreenText>

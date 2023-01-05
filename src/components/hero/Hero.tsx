@@ -30,7 +30,7 @@ export const Hero = () => {
           <b className="text-brand-green-default">
             Scilla Contracts Deployment Tool
           </b>{' '}
-          that empowers you to deploy your Scilla contracts via our{' '}
+          that empowers you to deploy your Scilla contracts effortlessly via our{' '}
           <b className="text-brand-green-default">
             a) Contracts Wizard (Interactive Code Generator){' '}
           </b>
