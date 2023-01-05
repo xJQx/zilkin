@@ -1,5 +1,6 @@
 {
   "name": "zilkin",
+  "homepage": "https://zilkin.tjh.sg",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
