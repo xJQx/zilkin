@@ -22,7 +22,10 @@ const ConnectButton = ({
     if (window.zilPay !== undefined) {
       const isConnect = await window.zilPay.wallet.connect();
       if (isConnect) setConnected(true);
-      else alert('User rejected');
+      else {
+        setConnected(false);
+        alert('User rejected');
+      }
     } else {
       alert('ZilPay not found!');
     }
@@ -66,7 +69,7 @@ const Content = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center pt-40 px-4 gap-6">
+    <div className="flex flex-col justify-center items-center px-4 gap-6">
       <PageTitle title="Deploy Page" />
       <div className="flex flex-wrap gap-3 justify-center">
         {tokens.map(tok => (
@@ -95,7 +98,9 @@ const Content = () => {
 
 export const DeployPage = () => {
   const [connected, setConnected] = useState<boolean>(
-    window.zilPay !== undefined && window.zilPay.wallet !== undefined,
+    window.zilPay !== undefined &&
+      window.zilPay.wallet !== undefined &&
+      window.zilPay.wallet.defaultAccount,
   );
 
   return (
