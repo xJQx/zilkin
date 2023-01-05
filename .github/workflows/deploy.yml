@@ -21,6 +21,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build website
         run: CI='' yarn run build
+      - name: Create 404.html
+        run: cp build/index.html build/404.html
 
       - name: deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
