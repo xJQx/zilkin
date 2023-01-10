@@ -34,7 +34,7 @@ const generate_zrc2_scilla = (
 
   let output = '';
 
-  output += '\n' + common;
+  output += '\n' + common(isOperator);
 
   output += '\n' + utils;
   if (isOperator) output += '\n' + utils_operator;

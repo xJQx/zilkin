@@ -1,7 +1,7 @@
 export const definition = `scilla_version 0`;
 
-export const library = `
-import IntUtils
+export const library = (operator: boolean) => `
+import ${operator ? "BoolUtils ListUtils ": ""}IntUtils
 library FungibleToken
 `;
 
@@ -41,10 +41,10 @@ let make_error =
     { _exception : "Error"; code : result_code }
 `;
 
-export default `
+export default (operator: boolean = false) => `
 ${definition}
 
-${library}
+${library(operator)}
 
 ${msg}
 

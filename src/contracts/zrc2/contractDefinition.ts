@@ -5,7 +5,7 @@ contract FungibleToken
   name : String,
   symbol: String,
   decimals: Uint32,
-  init_supply : Uint128
+  init_supply : Uint128${operator ? "," : ''}
   ${operator ? 'default_operators : List ByStr20' : ''}
 )
 `;
