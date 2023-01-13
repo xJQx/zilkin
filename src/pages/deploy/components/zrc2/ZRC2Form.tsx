@@ -116,7 +116,7 @@ export const ZRC2Form = ({
       newInit.push({
         vname: 'default_operators',
         type: 'List ByStr20',
-        value: immutableFields.default_operators,
+        value: immutableFields.default_operators.filter(opt => opt !== ''),
       });
 
     setInit(newInit);

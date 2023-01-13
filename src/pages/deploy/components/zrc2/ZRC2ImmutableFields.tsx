@@ -30,7 +30,6 @@ export const ZRC2ImmutableFields = ({
     React.SetStateAction<ZRC2ImmutableFieldsOptions>
   >;
 }) => {
-  console.log(immutableFields.default_operators);
   return (
     <div>
       <TextInput
