@@ -14,7 +14,7 @@ export const DocsCard = (props: DocsCardProps) => {
     <a href={href} target="_blank" rel="noopener noreferrer">
       <div
         id="card"
-        className="group/card border border-white rounded-lg border-dashed border-2 border-brand-green-default min-h-[12rem] max-w-[24rem] h-full w-full p-4 opacity-50 hover:opacity-100 hover:scale-105 hover:border-solid duration-100 cursor-pointer"
+        className="group/card border rounded-lg border-dashed border-2 border-brand-green-default min-h-[12rem] max-w-[24rem] h-full w-full p-4 opacity-50 hover:opacity-100 hover:scale-105 hover:border-solid duration-100 cursor-pointer"
       >
         <div
           id="card-title"

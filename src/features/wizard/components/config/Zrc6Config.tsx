@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import generate_zrc6_scilla, {
-  ZRC6Options,
-} from '../../../../contracts/zrc6/zrc6';
-import { ContractConfig } from '../../../../lib/types';
+import { generate_zrc6_scilla, ZRC6Options } from 'contracts/zrc6';
+import { ContractConfig } from 'lib/types';
 import { FeatureCheckbox } from '../FeatureCheckbox';
 
 interface Zrc6ConfigProps {

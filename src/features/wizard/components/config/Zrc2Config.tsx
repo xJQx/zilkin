@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import generate_zrc2_scilla, {
-  MintArgs,
-  OperatorArgs,
-} from '../../../../contracts/zrc2/zrc2';
-import { ContractConfig } from '../../../../lib/types';
+import { generate_zrc2_scilla, MintArgs, OperatorArgs } from 'contracts/zrc2';
+import { ContractConfig } from 'lib/types';
 import { FeatureCheckbox } from '../FeatureCheckbox';
 
 interface Zrc2ConfigProps {

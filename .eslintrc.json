@@ -22,6 +22,18 @@
       {
         "endOfLine": "auto"
       }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          "components/*/*",
+          "features/*/*",
+          "pages/*",
+          "contracts/*/*",
+          "lib/*/*"
+        ]
+      }
     ]
   },
   "settings": {

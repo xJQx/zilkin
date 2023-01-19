@@ -6,7 +6,7 @@ import {
   FeatureDescription,
   FeatureHeader,
   GreenText,
-} from '../../components';
+} from 'components';
 
 export const HomePage = () => {
   return (

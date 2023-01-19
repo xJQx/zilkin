@@ -1,6 +1,6 @@
 import React from 'react';
-import { DocsCard, FeatureHeader } from '../../components';
-import { PageTitle } from '../../components/typography/PageTitle';
+import { DocsCard } from 'features/docs';
+import { FeatureHeader, PageTitle } from 'components/typography';
 
 export const DocsPage = () => {
   return (

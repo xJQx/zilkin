@@ -1,7 +1,7 @@
 import React from 'react';
-import { Navbar, Footer } from './components';
+import { Navbar, Footer } from 'features/layout';
 import { Route, Routes } from 'react-router-dom';
-import { ContractsWizardPage, DeployPage, DocsPage, HomePage } from './pages';
+import { ContractsWizardPage, DeployPage, DocsPage, HomePage } from 'pages';
 
 function App() {
   return (

@@ -47,7 +47,6 @@ With our state-of-the-art **Contracts Wizard (Interactive Code Generator)**, you
 
 Don't waste any more time struggling with complicated deployment processes. With `ZilKin`, you'll have everything you need to get your contracts up and running in no time. Try `ZilKin` today and see how our cutting-edge tool can revolutionize the way you deploy your Scilla contracts. Take control of your workflow and experience the power of `ZilKin`!
 
-
 <br />
 
 ## 🚀 Demo
@@ -79,4 +78,5 @@ Liked it? Please give a ⭐️ to **ZilKin**.
 <br />
 
 ## 💡 Contributing
+
 Have an idea or improvement to make? Create an issue and make a pull request!

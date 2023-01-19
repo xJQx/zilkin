@@ -17,6 +17,7 @@ export const DeployButton = ({
     if (window.zilPay !== undefined) {
       const contract = window.zilPay.contracts.new(scillaCode, init);
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [tx, _] = await contract.deploy({
           gasLimit: '25000',
           gasPrice: '1000000000',
@@ -24,7 +25,7 @@ export const DeployButton = ({
         window.open(
           `https://viewblock.io/zilliqa/tx/0x${tx.ID}?network=${window.zilPay.wallet.net}`,
         );
-      } catch (e: any) {
+      } catch (e: unknown) {
         alert(e);
       }
     } else {

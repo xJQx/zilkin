@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { ContractConfig, ContractType } from '../../lib/types';
+import { ContractConfig, ContractType } from 'lib/types';
 import { ContractButton } from './ContractButton';
 import { FaCopy, FaFileUpload } from 'react-icons/fa';
 import { Zrc2Config, Zrc6Config } from './config';
-import { useAlert } from '../../lib/hooks';
+import { useAlert } from 'lib/hooks';
 import { useNavigate } from 'react-router-dom';
 
 export const Wizard = () => {

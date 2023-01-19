@@ -1,6 +1,6 @@
 import React from 'react';
-import { Wizard } from '../../components';
-import { PageTitle } from '../../components/typography/PageTitle';
+import { Wizard } from 'features/wizard';
+import { PageTitle } from 'components/typography';
 
 export const ContractsWizardPage = () => {
   return (

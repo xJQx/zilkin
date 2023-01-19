@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { ZRC6Form } from './components/zrc6/ZRC6Form';
-import { ZRC2Form } from './components/zrc2/ZRC2Form';
-import { ContractConfig } from '../../lib/types';
-import { PageTitle } from '../../components/typography/PageTitle';
+import { ZRC2Form, ZRC6Form } from 'features/deploy';
+import { ContractConfig } from 'lib/types';
+import { PageTitle } from 'components/typography';
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     zilPay: any;
   }
 }

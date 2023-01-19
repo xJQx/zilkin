@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContractType } from '../../lib/types';
+import { ContractType } from 'lib/types';
 
 interface ContractButtonProps {
   label: string;
